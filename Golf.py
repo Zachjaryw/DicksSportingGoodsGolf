@@ -7,13 +7,9 @@ st.title('Dicks Sporting Goods Golf Department')
 
 dbx = initializeToken(st.secrets.dropbox.access)
 
-toDBX(dbx,st.secrets.filepath.barcode,{'Barcode':[],
-                          'Brand':[],
-                          'Club Type':[],
-                          'Specifics':[]})
-toDBX(dbx,st.secrets.filepath.clubID,{'Serial Code':[],
-                                     'Barcode':[],
-                                     'Status':[]})
+toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Specifics':[]},st.secrets.filepath.barcode)
+toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
 
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
+
