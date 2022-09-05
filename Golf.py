@@ -86,14 +86,15 @@ elif action == 'Review Data':
     st.dataframe(df)
   elif action2 == 'Review data for a particular club type by barcode':
     barcodedata = st.text_input('Enter Barcode:','',key = 'bc')
-    if barcodedata != '':
-      pass
-    elif barcodedata != '' and not(str(barcodedata) in barcodes['Barcode']):
-      st.warning('This barcode is not in the system. Select the add club action to be able to collect data on this club.')
-    elif str(barcodedata) in barcodes['Barcode']:
-      displaydata = df[df['Barcode'] == str(barcode)]
-      st.dataframe(displaydata)
-      st.write('data')
+    SUBmit = st.button('Submit',key = 'by barcode')
+    if SUBmit:
+      if barcodedata != '':
+        pass
+      elif barcodedata != '' and not(str(barcodedata) in barcodes['Barcode']):
+        st.warning('This barcode is not in the system. Select the add club action to be able to collect data on this club.')
+      elif str(barcodedata) in barcodes['Barcode']:
+        displaydata = df[df['Barcode'] == str(barcode)]
+        st.dataframe(displaydata)
   elif action2 == 'Review data for a particular club type by description':
     clubbrand = st.selectbox('Please select club brand:',['Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'clubBrand')
     if clubbrand == 'Other':
