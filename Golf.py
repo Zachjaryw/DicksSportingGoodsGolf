@@ -55,7 +55,7 @@ elif barcode == '':
 elif barcode == 'Reset Data':
   reset = st.button('Press to confirm data reset.')
   if reset:
-    toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Specifics':[]},st.secrets.filepath.barcode)
+    toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Number':[],'Specifics':[]},st.secrets.filepath.barcode)
     toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
 elif barcode == 'Display Data':
   df1 = pd.DataFrame(clubID)
@@ -65,8 +65,18 @@ elif barcode == 'Display Data':
 else:
   st.write(f'Barcode, {barcode}, is not in the system:')
   with st.form('New Barcode'):
-    brand = st.selectbox('Please select club brand:',['Callaway','Titelist','Taylor Made','Top Flight','Ping','Cobra','Adams'],key = 'Brand')
+    brand = st.selectbox('Please select club brand:',['Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'Brand')
+    if brand == 'Other':
+      brand = st.text_input('Please Enter Unlisted Brand Name:','',key='Other Brand')
     type_ = st.selectbox('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
+    if type == 'Driver':
+      number = 1
+    elif type == 'Wedge':
+      number = st.selectbox('Please select type or degree:',['P','G','S','L','A',44,46,48,50,52,54,56,58,60,62,64],key = 'wedge degree')
+    elif type == 'Iron':
+      number = st.selectbox('Please select type or full set:',[9,8,7,6,5,4,3,2,1,'Full Set'])
+    else:
+      number = st.selectbox('Select Club Number',[1,2,3,4,5,6,7,8,9])
     specifics = st.text_input('Please type specifics about the club:','',key = 'specifics')
     submit = st.form_submit_button('Submit')
   if submit:
