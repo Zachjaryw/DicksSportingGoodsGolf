@@ -22,7 +22,7 @@ if barcode in barcodes['Barcode']:
   pos = barcodes['Barcode'].index(barcode)
   st.write(f"Barcode: {barcode}. Brand: {barcodes['Brand'][pos]}. Club Type: {barcodes['Club Type'][pos]}. Specifics: {barcodes['Specifics'][pos]}")
   club = col2.text_input('Enter Club ID Number','',key = 'ClubID')
-  if club in clubID:
+  if club in clubID['Serial Code']:
     ID = pd.DataFrame(clubID)
     ID = ID[ID['Barcode'] == str(barcode)]
     ID = ID[ID['Serial Code'] == str(club)]
@@ -32,7 +32,7 @@ if barcode in barcodes['Barcode']:
       barcodeMatch = ID.index.tolist()[0]
   else:
     barcodeMatch = -1
-  if club in clubID and barcodeMatch != -1:
+  if club in clubID['Serial Code'] and barcodeMatch != -1:
     st.write(f"This club is already in the system as: {barcodes['Brand'][pos]} {barcodes['Club Type'][pos]} {barcodes['Specifics'][pos]}. Status: {clubID['Status'][barcodeMatch]}")
     changeStatus = st.selectbox('Select New Status for selected club:',['Sold','In Stock','Stolen','Return In Stock'])
     change = st.button('Confirm Status Change',key = 'Status Change')
