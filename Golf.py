@@ -93,8 +93,7 @@ elif action == 'Review Data':
     elif str(barcodedata) in barcodes['Barcode']:
       displaydata = df[df['Barcode'] == str(barcode)]
       st.dataframe(displaydata)
-    else:
-      st.warning('help')
+      st.write('data')
   elif action2 == 'Review data for a particular club type by description':
     clubbrand = st.selectbox('Please select club brand:',['Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'clubBrand')
     if clubbrand == 'Other':
