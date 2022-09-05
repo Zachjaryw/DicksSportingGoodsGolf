@@ -61,7 +61,7 @@ if action == 'Add, adjust, or check a club by barcode and serial code':
       if brand == 'Other':
         brand = st.text_input('Please Enter Unlisted Brand Name:','',key='Other Brand')
       type_ = st.selectbox('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
-      number = st.text_entry('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'club number')
+      number = st.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'club number')
       specifics = st.text_input('Please type specifics about the club:','',key = 'specifics')
       submit = st.form_submit_button('Submit')
     if submit:
@@ -85,7 +85,7 @@ elif action == 'Review Data':
   if action2 == 'Review all clubs data':
     st.dataframe(df)
   elif action2 == 'Review data for a particular club type by barcode':
-    barcodedata = st.text_entry('Enter Barcode:','',key = 'bc')
+    barcodedata = st.text_input('Enter Barcode:','',key = 'bc')
     if barcodedata != '':
       pass
     elif barcodedata != '' and not(str(barcodedata) in barcodes['Barcode']):
