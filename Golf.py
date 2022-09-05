@@ -27,29 +27,37 @@ if barcode in barcodes['Barcode']:
     ID = ID[ID['Barcode'] == barcode]
     ID = ID[ID['Serial Code'] == club]
     if ID.empty == True:
-      barcodeMatch = 0
+      barcodeMatch = -1
     else:
       barcodeMatch = ID.index.tolist()[0]
   else:
-    barcodeMatch = 0
-  if club in clubID and barcodeMatch != 0:
+    barcodeMatch = -1
+  if club in clubID and barcodeMatch != -1:
     st.write(f'This club is already in the system as: {barcodes['Brand'][pos]} {barcodes['Club Type'][pos] {barcodes['Specifics'][pos]}. Status: {clubID['Status'][barcodeMatch]]}')
     changeStatus = st.select_box('Select New Status for selected club:',['Sold','In Stock','Stolen','Return In Stock'])
     change = st.button('Confirm Status Change',key = 'Status Change')
     if change:
-      clubID
-      #adjust club status
-      toDBX(dbx,)
+      clubID['Status'][barcodeMatch] = changeStatus
+      toDBX(dbx,clubID,st.secrets.filepath.clubID)
+       st.write(f'Club {club} status has been changed to {changeStatus}.')
   elif club == '':
     pass
   else:
     st.write(f'Club, {club), with barcode {barcode} is not in the system.')
     confirm = st.button('Confirm New Club Barcode and Club ID then submit to add club to system.',key = 'newclub')
     if confirm:
-      #add new club to system
-      toDBX(dbx,
+      clubID['Serial Code'].append(club)
+      clubID['Barcode'].append(barcode)
+      clubID['Status'].append('In Stock')
+      toDBX(dbx,clubID,st.secrets.filepath.clubID)
+      st.write(f'New club {clubID} has been added to the system')
 elif barcode == '':
   pass
+elif barcode == 'Display Data':
+  df1 = pd.DataFrame(clubID)
+  df2 = pd.DataFrame(barcodes)
+  df = pd.merge(df1,df2)
+  st.dataframe(df)
 else:
   st.write(f'Barcode, {barcode}, is not in the system:')
   with st.form('New Barcode'):
@@ -63,4 +71,5 @@ else:
     barcodes['Club Type'].append(type_)
     barcodes['Specifics'].append(specifics)
     toDBX(dbx,barcodes,st.secrets.filepath.barcodes)
+    st.write(f'New barcode has been added to the system')
   
