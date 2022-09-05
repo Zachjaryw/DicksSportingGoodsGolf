@@ -3,7 +3,7 @@ import numpy as np
 import streamlit as st
 from Dropbox_Setup import *
 
-st.title('Dicks Sporting Goods Golf Department')
+st.title('Golf Club Inventory System')
 
 dbx = initializeToken(st.secrets.dropbox.access)
 
