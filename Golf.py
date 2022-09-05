@@ -19,7 +19,7 @@ col1,col2 = st.columns(2)
 barcode = col1.text_input('Enter Barcode Number','',key = 'Barcode')
 
 if barcode in barcodes['Barcode']:
-  pos = barcodes['Barcode'].iloc[barcode]
+  pos = barcodes['Barcode'].index(barcode)
   st.write(f"Barcode: {barcode}. Brand: {barcodes['Brand'][pos]}. Club Type: {barcodes['Club Type'][pos]}. Specifics: {barcodes['Specifics'][pos]}")
   club = col2.text_input('Enter Club ID Number','',key = 'ClubID')
   if club in clubID:
