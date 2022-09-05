@@ -88,7 +88,7 @@ elif action == 'Review Data':
     barcodedata = st.text_input('Enter Barcode:','',key = 'bc')
     SUBmit = st.button('Submit',key = 'by barcode')
     if SUBmit:
-      if barcodedata != '':
+      if barcodedata == '':
         st.warning('Enter a valid barcode')
       elif barcodedata != '' and not(str(barcodedata) in barcodes['Barcode']):
         st.warning('This barcode is not in the system. Select the add club action to be able to collect data on this club.')
