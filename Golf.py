@@ -10,12 +10,11 @@ dbx = initializeToken(st.secrets.dropbox.access)
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
-col1,col2 = st.columns(2)
-barcode = col1.text_input('Enter Barcode Number','',key = 'Barcode')
-
 action = st.selectbox('Select action:',['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data'],key = 'action')
 
 if action == 'Add, adjust, or check a club by barcode and serial code':
+  col1,col2 = st.columns(2)
+  barcode = col1.text_input('Enter Barcode Number','',key = 'Barcode')
   if barcode in barcodes['Barcode']:
     pos = barcodes['Barcode'].index(barcode)
     st.write(f"""
