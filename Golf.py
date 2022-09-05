@@ -16,9 +16,9 @@ barcode = col1.text_input('Enter Barcode Number','',key = 'Barcode')
 if barcode in barcodes['Barcode']:
   pos = barcodes['Barcode'].index(barcode)
   st.write(f"""
-  Barcode: {barcode}. 
-  Brand: {barcodes['Brand'][pos]}. 
-  Club Type: {barcodes['Club Type'][pos]}. 
+  Barcode: {barcode}. \n
+  Brand: {barcodes['Brand'][pos]}. \n
+  Club Type: {barcodes['Club Type'][pos]}. \n
   Specifics: {barcodes['Specifics'][pos]}""")
   club = col2.text_input('Enter Club ID Number','',key = 'ClubID')
   if club in clubID['Serial Code']:
@@ -33,10 +33,10 @@ if barcode in barcodes['Barcode']:
     barcodeMatch = -1
   if club in clubID['Serial Code'] and barcodeMatch != -1:
     st.write(f"""
-    This club is already in the system as: 
-    Brand: {barcodes['Brand'][pos]} 
-    Type: {barcodes['Club Type'][pos]} 
-    Specifics: {barcodes['Specifics'][pos]}. 
+    This club is already in the system as: \n
+    Brand: {barcodes['Brand'][pos]} \n
+    Type: {barcodes['Club Type'][pos]} \n
+    Specifics: {barcodes['Specifics'][pos]}. \n
     Status: {clubID['Status'][barcodeMatch]}""")
     changeStatus = st.selectbox('Select New Status for selected club:',['Sold','In Stock','Stolen','Return In Stock'])
     change = st.button('Confirm Status Change',key = 'Status Change')
