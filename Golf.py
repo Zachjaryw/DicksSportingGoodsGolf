@@ -39,7 +39,7 @@ if barcode in barcodes['Barcode']:
     if change:
       clubID['Status'][barcodeMatch] = changeStatus
       toDBX(dbx,clubID,st.secrets.filepath.clubID)
-       st.write(f'Club {club} status has been changed to {changeStatus}.')
+      st.write(f'Club {club} status has been changed to {changeStatus}.')
   elif club == '':
     pass
   else:
