@@ -70,6 +70,6 @@ else:
     barcodes['Brand'].append(brand)
     barcodes['Club Type'].append(type_)
     barcodes['Specifics'].append(specifics)
-    toDBX(dbx,barcodes,st.secrets.filepath.barcodes)
+    toDBX(dbx,barcodes,st.secrets.filepath.barcode)
     st.write(f'New barcode has been added to the system')
   
