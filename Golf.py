@@ -32,12 +32,7 @@ if barcode in barcodes['Barcode']:
   else:
     barcodeMatch = -1
   if club in clubID['Serial Code'] and barcodeMatch != -1:
-    st.write(f"""
-    This club is already in the system as: \n
-    Brand: {barcodes['Brand'][pos]} \n
-    Type: {barcodes['Club Type'][pos]} \n
-    Specifics: {barcodes['Specifics'][pos]}. \n
-    Status: {clubID['Status'][barcodeMatch]}""")
+    st.write(f"This club is in the system as status: {clubID['Status'][barcodeMatch]}")
     changeStatus = st.selectbox('Select New Status for selected club:',['Sold','In Stock','Stolen','Return In Stock'])
     change = st.button('Confirm Status Change',key = 'Status Change')
     if change:
