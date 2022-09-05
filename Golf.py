@@ -34,7 +34,7 @@ if barcode in barcodes['Barcode']:
     barcodeMatch = -1
   if club in clubID and barcodeMatch != -1:
     st.write(f"This club is already in the system as: {barcodes['Brand'][pos]} {barcodes['Club Type'][pos]} {barcodes['Specifics'][pos]}. Status: {clubID['Status'][barcodeMatch]}")
-    changeStatus = st.select_box('Select New Status for selected club:',['Sold','In Stock','Stolen','Return In Stock'])
+    changeStatus = st.selectbox('Select New Status for selected club:',['Sold','In Stock','Stolen','Return In Stock'])
     change = st.button('Confirm Status Change',key = 'Status Change')
     if change:
       clubID['Status'][barcodeMatch] = changeStatus
@@ -61,8 +61,8 @@ elif barcode == 'Display Data':
 else:
   st.write(f'Barcode, {barcode}, is not in the system:')
   with st.form('New Barcode'):
-    brand = st.select_box('Please select club brand:',['Callaway','Titelist','Taylor Made','Top Flight','Ping','Cobra','Adams'],key = 'Brand')
-    type_ = st.select_box('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
+    brand = st.selectbox('Please select club brand:',['Callaway','Titelist','Taylor Made','Top Flight','Ping','Cobra','Adams'],key = 'Brand')
+    type_ = st.selectbox('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
     specifics = st.text_input('Please type specifics about the club:','',key = 'specifics')
     submit = st.form_submit_button('Submit')
   if submit:
