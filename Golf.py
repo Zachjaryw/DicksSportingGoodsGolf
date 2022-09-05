@@ -83,7 +83,7 @@ elif action == 'Review Data':
   df2 = pd.DataFrame(barcodes)
   df = pd.merge(df1,df2)
   action2 = st.selectbox('Would you like to:',['Review all clubs data','Review data for a particular club type by barcode','Review data for a particular club type by description'],key = 'action2')
-  if action2 == 'Review all clubs data:
+  if action2 == 'Review all clubs data':
     st.dataframe(df)
   elif action2 == 'Review data for a particular club type by barcode':
     barcodedata = st.text_entry('Enter Barcode:','',key = 'bc')
