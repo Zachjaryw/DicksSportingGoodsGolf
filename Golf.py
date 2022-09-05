@@ -88,6 +88,7 @@ elif action == 'Review Data':
   elif action2 == 'Review data for a particular club type by barcode':
     barcodedata = st.text_entry('Enter Barcode:','',key = 'bc')
     if barcodedata != '':
+      pass
     elif barcodedata != '' and not(str(barcodedata) in barcodes['Barcode']):
       st.warning('This barcode is not in the system. Select the add club action to be able to collect data on this club.')
     elif str(barcodedata) in barcodes['Barcode']:
