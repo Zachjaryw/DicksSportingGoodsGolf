@@ -7,11 +7,6 @@ st.title('Dicks Sporting Goods Golf Department')
 
 dbx = initializeToken(st.secrets.dropbox.access)
 
-reinitialize = '''
-toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Specifics':[]},st.secrets.filepath.barcode)
-toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
-'''
-
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
@@ -53,6 +48,11 @@ if barcode in barcodes['Barcode']:
       st.write(f'New club {clubID} has been added to the system')
 elif barcode == '':
   pass
+elif barcode == 'Reset Data':
+  reset = st.button('Press to confirm data reset.')
+  if reset:
+    toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Specifics':[]},st.secrets.filepath.barcode)
+    toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
 elif barcode == 'Display Data':
   df1 = pd.DataFrame(clubID)
   df2 = pd.DataFrame(barcodes)
