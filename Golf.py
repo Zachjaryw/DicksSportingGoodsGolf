@@ -24,8 +24,8 @@ if barcode in barcodes['Barcode']:
   club = col2.text_input('Enter Club ID Number','',key = 'ClubID')
   if club in clubID:
     ID = pd.DataFrame(clubID)
-    ID = ID[ID['Barcode'] == barcode]
-    ID = ID[ID['Serial Code'] == club]
+    ID = ID[ID['Barcode'] == str(barcode)]
+    ID = ID[ID['Serial Code'] == str(club)]
     if ID.empty == True:
       barcodeMatch = -1
     else:
