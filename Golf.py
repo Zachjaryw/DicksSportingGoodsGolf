@@ -40,10 +40,10 @@ if barcode in barcodes['Barcode']:
       clubID['Status'][barcodeMatch] = changeStatus
       toDBX(dbx,clubID,st.secrets.filepath.clubID)
       st.write(f'Club {club} status has been changed to {changeStatus}.')
-  elif club == '':
+  elif club == "":
     pass
   else:
-    st.write(f'Club, {club), with barcode {barcode} is not in the system.')
+    st.write(f'Club, {club}, with barcode {barcode} is not in the system.')
     confirm = st.button('Confirm New Club Barcode and Club ID then submit to add club to system.',key = 'newclub')
     if confirm:
       clubID['Serial Code'].append(club)
