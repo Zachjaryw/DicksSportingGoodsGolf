@@ -84,7 +84,7 @@ elif barcode == '':
   pass
 else:
   add.write(f'Barcode, {barcode}, is not in the system:')
-  brand = add.selectbox('Please select club brand:',['Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'Brand')
+  brand = add.selectbox('Please select club brand:',['Callaway','Titleist','Taylor Made','Top Flight','Tommy Armour','Ping','Cobra','Adams','Other'],key = 'Brand')
   if brand == 'Other':
     brand = add.text_input('Please Enter Unlisted Brand Name:','',key='Other Brand')
   type_ = add.selectbox('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
@@ -127,7 +127,7 @@ elif action2 == 'Search for clubs by barcode':
       displaydataframe(pd.merge(df,pd.DataFrame(barcodes)))
 elif action2 == 'Search for clubs by description':
   data.write('Please refine down to your search criteria. Anything left blank will not be filtered.')
-  cbrand = data.selectbox('Please select club brand:',['All','Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'cBrand')
+  cbrand = data.selectbox('Please select club brand:',['All','Callaway','Titleist','Taylor Made','Top Flight','Tommy Armour','Ping','Cobra','Adams','Other'],key = 'cBrand')
   if cbrand == 'Other':
     cbrand = data.text_input('Please Enter Unlisted Brand Name:','',key='cOther Brand')
   ctype_ = data.selectbox('Please select club type:',['All','Driver','Wood','Iron','Wedge','Putter'],key = 'cClub Type')
