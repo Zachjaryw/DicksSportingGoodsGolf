@@ -87,7 +87,7 @@ else:
     type_ = add.selectbox('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
     number = add.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'club number')
     specifics = add.text_input('Please type specifics about the club:','',key = 'specifics')
-    submit = st.form_submit_button('Submit')
+    submit = add.form_submit_button('Submit')
   if submit:
     barcodes['Barcode'].append(barcode)
     barcodes['Brand'].append(brand)
