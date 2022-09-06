@@ -103,13 +103,13 @@ elif action == 'Review Data':
         cbrand = st.text_input('Please Enter Unlisted Brand Name:','',key='cOther Brand')
       ctype_ = st.selectbox('Please select club type:',['All','Driver','Wood','Iron','Wedge','Putter'],key = 'cClub Type')
       cnumber = st.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'cclub number')
-      csubmit = st.form_submit_button('cSubmit')
+      csubmit = st.form_submit_button('Submit')
     if csubmit:
       displaydata = df.copy()
       if cbrand != 'All':
         displaydata = displaydata[displaydata['Brand'] == cbrand]
       if ctype_ != 'All':
-        displaydata = displaydata[displaydata['Type'] == ctype_]
+        displaydata = displaydata[displaydata['Club Type'] == ctype_]
       if cnumber != '':
         displaydata = displaydata[displaydata['Number'] == str(cnumber)]
       st.dataframe(displaydata)
