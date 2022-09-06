@@ -11,7 +11,7 @@ dbx = initializeToken(st.secrets.dropbox.access)
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
-action = st.selectbox('Select action:',['Add, adjust, or check a club by barcode and serial code','Review Data'],key = 'action') #,'Reset Data'],key = 'action')
+action = st.tabs('Select action:',['Add, adjust, or check a club by barcode and serial code','Review Data'],key = 'action') #,'Reset Data'],key = 'action')
 
 def displaydataframe(dataframe:pd.DataFrame):
   with st.container():
