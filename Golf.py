@@ -97,7 +97,7 @@ elif action == 'Review Data':
         st.dataframe(displaydata)
   elif action2 == 'Review data for a particular club type by description':
     with st.form('New Barcode'):
-      st.write('Please refine down to your search criteria. Anything left blank will 
+      st.write('Please refine down to your search criteria. Anything left blank will not be filtered.')
       cbrand = st.selectbox('Please select club brand:',['All','Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'cBrand')
       if cbrand == 'Other':
         cbrand = st.text_input('Please Enter Unlisted Brand Name:','',key='cOther Brand')
@@ -105,6 +105,12 @@ elif action == 'Review Data':
       cnumber = st.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'cclub number')
       csubmit = st.form_submit_button('cSubmit')
     if csubmit:
+      displaydata = df.copy()
       if cbrand != 'All':
-        pass
-              
+        displaydata = displaydata[displaydata['Brand'] == cbrand]
+      if ctype_ != 'All':
+        displaydata = displaydata[displaydata['Type'] == ctype_]
+      if cnumber != '':
+        displaydata = displaydata[displaydata['Number'] == str(cnumber)]
+      st.dataframe(displaydata)
+
