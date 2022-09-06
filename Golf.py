@@ -135,7 +135,7 @@ elif action2 == 'Search for clubs by description':
   chand = data.selectbox('Please select club handedness:',['All','Right Hand','Left Hand'],key = 'handc')
   cflex = data.selectbox('Please select shaft flex:',['All','Regular','Stiff','Extra','Senior','Ladies'],key = 'cflex')
   cstatus = data.selectbox('Please select club status:',['All','In Stock','Sold','Stolen','Return In Stock'],key = 'cstatus')
-  csubmit = data.button('Submit')
+  csubmit = data.button('Submit',key = 'csubmitbutton')
   if csubmit:
     displaydata = pd.DataFrame(barcodes)
     df2 = pd.DataFrame(clubID)
