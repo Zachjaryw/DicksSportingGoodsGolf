@@ -3,6 +3,7 @@ import numpy as np
 import streamlit as st
 from Dropbox_Setup import *
 
+st.set_page_config(layout="wide")
 st.title('Golf Club Inventory System')
 
 dbx = initializeToken(st.secrets.dropbox.access)
@@ -10,7 +11,30 @@ dbx = initializeToken(st.secrets.dropbox.access)
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
-action = st.selectbox('Select action:',['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data'],key = 'action')
+action = st.selectbox('Select action:',['Add, adjust, or check a club by barcode and serial code','Review Data'],key = 'action') #,'Reset Data'],key = 'action')
+
+def displaydataframe(dataframe:pd.DataFrame):
+  with st.container():
+    c1,c2,c3,c4,c5,c6,c7,c8 = st.columns([1,2,2,2,2,2,2,4])
+    c1.write('#')
+    c2.write('Serial Code')
+    c3.write('Barcode')
+    c4.write('Status')
+    c5.write('Brand')
+    c6.write('Type')
+    c7.write('Number')
+    c8.write('Specifics')
+  for index in dataframe.index.tolist():
+    with st.container():
+    c1,c2,c3,c4,c5,c6,c7,c8 = st.columns([1,2,2,2,2,2,2,4])
+      c1.write(index)
+      c2.write(dataframe['Serial Code'][index])
+      c3.write(dataframe['Barcode'][index])
+      c4.write(dataframe['Status'][index])
+      c5.write(dataframe['Brand'][index])
+      c6.write(dataframe['Club Type'][index])
+      c7.write(dataframe['Number'][index])
+      c8.write(dataframe['Specifics'][index])
 
 if action == 'Add, adjust, or check a club by barcode and serial code':
   col1,col2 = st.columns(2)
@@ -83,7 +107,7 @@ elif action == 'Review Data':
   df = pd.merge(df1,df2)
   action2 = st.selectbox('Would you like to:',['Review all clubs data','Search for clubs by barcode','Search for clubs by description','Search by club Serial Code'],key = 'action2')
   if action2 == 'Review all clubs data':
-    st.dataframe(df)
+    displaydataframe(df)
   elif action2 == 'Search for clubs by barcode':
     barcodedata = st.text_input('Enter Barcode:','',key = 'bc')
     SUBmit = st.button('Submit',key = 'by barcode')
@@ -94,7 +118,7 @@ elif action == 'Review Data':
         st.warning('This barcode is not in the system. Select the add club action to be able to collect data on this club.')
       elif str(barcodedata) in barcodes['Barcode']:
         displaydata = df[df['Barcode'] == str(barcodedata)]
-        st.dataframe(displaydata)
+        displaydataframe(displaydata)
   elif action2 == 'Search for clubs by description':
     with st.form('New Barcode'):
       st.write('Please refine down to your search criteria. Anything left blank will not be filtered.')
@@ -115,7 +139,7 @@ elif action == 'Review Data':
       if displaydata.empty == True:
         st.warning('There are no clubs that fit this criteria')
       else:
-        st.dataframe(displaydata)
+        displaydataframe(displaydata)
   elif action2 == 'Search by club Serial Code':
     serialnumber = st.text_input('Enter serial number:','',key = 'serialnumber')
     if st.button('Submit',key = 'submitrefine'):
@@ -123,5 +147,5 @@ elif action == 'Review Data':
       if displaydata.empty == True:
         st.warning('There are no clubs that fit this criteria')
       else:
-        st.dataframe(displaydata)
+        displaydataframe(displaydata)
 
