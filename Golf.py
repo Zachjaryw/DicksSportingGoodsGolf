@@ -11,7 +11,7 @@ dbx = initializeToken(st.secrets.dropbox.access)
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
-add,data,reset = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data'])
+add,data,reset,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data','Save Data'])
 
 def displaydataframe(dataframe:pd.DataFrame):
   with data.container():
@@ -166,3 +166,7 @@ elif action2 == 'Search by club Serial Code':
     else:
       displaydataframe(pd.merge(displaydata,pd.DataFrame(barcodes)))
 
+savedata = save.button('Save full dataset in data storage',key = 'savedata')
+if savedata:
+  toDBX(dbx,pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes)).to_dict(),st.secrets.filepath.saveFile)
+  save.write('File has been saved to local data storage.')
