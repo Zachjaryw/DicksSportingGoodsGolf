@@ -110,12 +110,9 @@ if reset:
   toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Number':[],'Hand':[],'Shaft Flex':[],'Specifics':[]},st.secrets.filepath.barcode)
   toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
 
-df1 = pd.DataFrame(clubID)
-df2 = pd.DataFrame(barcodes)
-df = pd.merge(df1,df2)
 action2 = data.selectbox('Would you like to:',['Review all clubs data','Search for clubs by barcode','Search for clubs by description','Search by club Serial Code'],key = 'action2')
 if action2 == 'Review all clubs data':
-  displaydataframe(df)
+  displaydataframe(pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes)))
 elif action2 == 'Search for clubs by barcode':
   barcodedata = data.text_input('Enter Barcode:','',key = 'bc')
   SUBmit = data.button('Submit',key = 'by barcode')
@@ -125,8 +122,9 @@ elif action2 == 'Search for clubs by barcode':
     elif barcodedata != '' and not(str(barcodedata) in barcodes['Barcode']):
       data.warning('This barcode is not in the system. Select the add club action to be able to collect data on this club.')
     elif str(barcodedata) in barcodes['Barcode']:
+      df = pd.DataFrame(clubID)
       displaydata = df[df['Barcode'] == str(barcodedata)]
-      displaydataframe(displaydata)
+      displaydataframe(pd.merge(df,pd.DataFrame(barcodes)))
 elif action2 == 'Search for clubs by description':
   data.write('Please refine down to your search criteria. Anything left blank will not be filtered.')
   cbrand = data.selectbox('Please select club brand:',['All','Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'cBrand')
@@ -139,7 +137,8 @@ elif action2 == 'Search for clubs by description':
   cstatus = data.selectbox('Please select club status:',['All','In Stock','Sold','Stolen','Return In Stock'],key = 'cstatus')
   csubmit = data.button('Submit')
   if csubmit:
-    displaydata = df.copy()
+    displaydata = pd.DataFrame(barcodes)
+    df2 = pd.DataFrame(clubID)
     if cbrand != 'All':
       displaydata = displaydata[displaydata['Brand'] == cbrand]
     if ctype_ != 'All':
@@ -149,9 +148,10 @@ elif action2 == 'Search for clubs by description':
     if cflex != 'All':
       displaydata = displaydata[displaydata['Shaft Flex'] == cflex]
     if cstatus != 'All':
-      displaydata = displaydata[displaydata['Status'] == cstatus]
+      df2 = df2[df2['Status'] == cstatus]
     if cnumber != '':
       displaydata = displaydata[displaydata['Number'] == str(cnumber)]
+    displaydata = pd.merge(df2,displaydata))
     if displaydata.empty == True:
       data.warning('There are no clubs that fit this criteria')
     else:
@@ -159,9 +159,10 @@ elif action2 == 'Search for clubs by description':
 elif action2 == 'Search by club Serial Code':
   serialnumber = data.text_input('Enter serial number:','',key = 'serialnumber')
   if data.button('Submit',key = 'submitrefine'):
+    displaydata = pd.DataFrame(clubID)
     displaydata = df[df['Serial Code'] == str(serialnumber)]
     if displaydata.empty == True:
       data.warning('There are no clubs that fit this criteria')
     else:
-      displaydataframe(displaydata)
+      displaydataframe(pd.merge(displaydata,pd.DataFrame(barcodes)))
 
