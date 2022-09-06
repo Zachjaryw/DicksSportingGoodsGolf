@@ -75,7 +75,7 @@ if barcode in barcodes['Barcode']:
       clubID['Status'].append('In Stock')
       toDBX(dbx,clubID,st.secrets.filepath.clubID)
       add.write(f'New club {club} has been added to the system')
-      add.experimental_rerun()
+      st.experimental_rerun()
 elif barcode == '':
   pass
 else:
@@ -95,7 +95,7 @@ else:
     barcodes['Number'].append(number)
     toDBX(dbx,barcodes,st.secrets.filepath.barcode)
     add.write(f'New barcode has been added to the system')
-    add.experimental_rerun()
+    st.experimental_rerun()
 
 reset = reset.button('Press to confirm data reset.')
 if reset:
