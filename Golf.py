@@ -27,7 +27,7 @@ def displaydataframe(dataframe:pd.DataFrame):
   for index in dataframe.index.tolist():
     with st.container():
       c1,c2,c3,c4,c5,c6,c7,c8 = st.columns([1,2,2,2,2,2,2,4])
-      c1.write(index)
+      c1.write(str(index))
       c2.write(dataframe['Serial Code'][index])
       c3.write(dataframe['Barcode'][index])
       c4.write(dataframe['Status'][index])
