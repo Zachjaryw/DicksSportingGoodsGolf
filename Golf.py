@@ -80,14 +80,13 @@ elif barcode == '':
   pass
 else:
   add.write(f'Barcode, {barcode}, is not in the system:')
-  with add.form('New Barcode'):
-    brand = add.selectbox('Please select club brand:',['Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'Brand')
-    if brand == 'Other':
-      brand = add.text_input('Please Enter Unlisted Brand Name:','',key='Other Brand')
-    type_ = add.selectbox('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
-    number = add.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'club number')
-    specifics = add.text_input('Please type specifics about the club:','',key = 'specifics')
-    submit = add.form_submit_button('Submit')
+  brand = add.selectbox('Please select club brand:',['Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'Brand')
+  if brand == 'Other':
+    brand = add.text_input('Please Enter Unlisted Brand Name:','',key='Other Brand')
+  type_ = add.selectbox('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
+  number = add.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'club number')
+  specifics = add.text_input('Please type specifics about the club:','',key = 'specifics')
+  submit = add.button('Submit')
   if submit:
     barcodes['Barcode'].append(barcode)
     barcodes['Brand'].append(brand)
@@ -121,14 +120,13 @@ elif action2 == 'Search for clubs by barcode':
       displaydata = df[df['Barcode'] == str(barcodedata)]
       displaydataframe(displaydata)
 elif action2 == 'Search for clubs by description':
-  with data.form('New Barcode'):
-    data.write('Please refine down to your search criteria. Anything left blank will not be filtered.')
-    cbrand = data.selectbox('Please select club brand:',['All','Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'cBrand')
-    if cbrand == 'Other':
-      cbrand = data.text_input('Please Enter Unlisted Brand Name:','',key='cOther Brand')
-    ctype_ = data.selectbox('Please select club type:',['All','Driver','Wood','Iron','Wedge','Putter'],key = 'cClub Type')
-    cnumber = data.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'cclub number')
-    csubmit = data.form_submit_button('Submit')
+  data.write('Please refine down to your search criteria. Anything left blank will not be filtered.')
+  cbrand = data.selectbox('Please select club brand:',['All','Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'cBrand')
+  if cbrand == 'Other':
+    cbrand = data.text_input('Please Enter Unlisted Brand Name:','',key='cOther Brand')
+  ctype_ = data.selectbox('Please select club type:',['All','Driver','Wood','Iron','Wedge','Putter'],key = 'cClub Type')
+  cnumber = data.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'cclub number')
+  csubmit = data.button('Submit')
   if csubmit:
     displaydata = df.copy()
     if cbrand != 'All':
