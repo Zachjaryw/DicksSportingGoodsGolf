@@ -151,7 +151,7 @@ elif action2 == 'Search for clubs by description':
       df2 = df2[df2['Status'] == cstatus]
     if cnumber != '':
       displaydata = displaydata[displaydata['Number'] == str(cnumber)]
-    displaydata = pd.merge(df2,displaydata))
+    displaydata = pd.merge(df2,displaydata)
     if displaydata.empty == True:
       data.warning('There are no clubs that fit this criteria')
     else:
