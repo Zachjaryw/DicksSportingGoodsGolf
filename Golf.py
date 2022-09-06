@@ -84,7 +84,7 @@ elif action == 'Review Data':
   action2 = st.selectbox('Would you like to:',['Review all clubs data','Search for clubs by barcode','Search for clubs by description','Search by club Serial Code'],key = 'action2')
   if action2 == 'Review all clubs data':
     st.dataframe(df)
-  elif action2 == 'Search for clubs by barcode:
+  elif action2 == 'Search for clubs by barcode':
     barcodedata = st.text_input('Enter Barcode:','',key = 'bc')
     SUBmit = st.button('Submit',key = 'by barcode')
     if SUBmit:
