@@ -23,10 +23,12 @@ def displaydataframe(dataframe:pd.DataFrame):
     c5.write('Brand')
     c6.write('Type')
     c7.write('Number')
-    c8.write('Specifics')
+    c8.write('Handedness')
+    c9.write('Shaft Flex')
+    c10.write('Specifics')
   for index in dataframe.index.tolist():
     with data.container():
-      c1,c2,c3,c4,c5,c6,c7,c8 = data.columns([1,2,2,2,2,2,2,4])
+      c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = data.columns([1,2,2,2,2,2,2,2,2,2])
       c1.write(str(index))
       c2.write(dataframe['Serial Code'][index])
       c3.write(dataframe['Barcode'][index])
@@ -34,7 +36,9 @@ def displaydataframe(dataframe:pd.DataFrame):
       c5.write(dataframe['Brand'][index])
       c6.write(dataframe['Club Type'][index])
       c7.write(dataframe['Number'][index])
-      c8.write(dataframe['Specifics'][index])
+      c8.write(dataframe['Hand'][index])
+      c9.write(dataframe['Shaft Flex'][index])
+      c10.write(dataframe['Specifics'][index])
 
 col1,col2 = add.columns(2)
 barcode = col1.text_input('Enter Barcode Number','',key = 'Barcode')
@@ -44,7 +48,7 @@ if barcode in barcodes['Barcode']:
   Barcode: {barcode}. \n
   Brand: {barcodes['Brand'][pos]}. \n
   Club Type: {barcodes['Number'][pos]} {barcodes['Club Type'][pos]}. \n
-  Specifics: {barcodes['Specifics'][pos]}""")
+  Specifics: {barcodes['Hand'][pos]} {barcodes['Shaft Flex'][pos]} {barcodes['Specifics'][pos]}""")
   club = col2.text_input('Enter Club ID Number','',key = 'ClubID')
   if club in clubID['Serial Code']:
     ID = pd.DataFrame(clubID)
@@ -85,6 +89,8 @@ else:
     brand = add.text_input('Please Enter Unlisted Brand Name:','',key='Other Brand')
   type_ = add.selectbox('Please select club type:',['Driver','Wood','Iron','Wedge','Putter'],key = 'Club Type')
   number = add.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'club number')
+  hand = add.selectbox('Please select handedness:',['Right Hand','Left Hand'],key = 'hand')
+  flex = add.selectbox('Please select the flex of the shaft:',['Regular','Stiff','Extra','Senior','Ladies'],key = 'felx')
   specifics = add.text_input('Please type specifics about the club:','',key = 'specifics')
   submit = add.button('Submit')
   if submit:
@@ -93,13 +99,15 @@ else:
     barcodes['Club Type'].append(type_)
     barcodes['Specifics'].append(specifics)
     barcodes['Number'].append(number)
+    barcodes['Hand'].append(hand)
+    barcodes['Shaft Flex'].append(flex)
     toDBX(dbx,barcodes,st.secrets.filepath.barcode)
     add.write(f'New barcode has been added to the system')
     st.experimental_rerun()
 
 reset = reset.button('Press to confirm data reset.')
 if reset:
-  toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Number':[],'Specifics':[]},st.secrets.filepath.barcode)
+  toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Number':[],'Hand':[],'Shaft Flex':[],'Specifics':[]},st.secrets.filepath.barcode)
   toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
 
 df1 = pd.DataFrame(clubID)
@@ -126,6 +134,9 @@ elif action2 == 'Search for clubs by description':
     cbrand = data.text_input('Please Enter Unlisted Brand Name:','',key='cOther Brand')
   ctype_ = data.selectbox('Please select club type:',['All','Driver','Wood','Iron','Wedge','Putter'],key = 'cClub Type')
   cnumber = data.text_input('Please enter club number (ex: enter 7 for 7 Iron or 56 for 56 degree wedge):','', key = 'cclub number')
+  chand = data.selectbox('Please select club handedness:',['All','Right Hand','Left Hand'],key = 'handc')
+  cflex = data.selectbox('Please select shaft flex:',['All','Regular','Stiff','Extra','Senior','Ladies'],key = 'cflex')
+  cstatus = data.selectbox('Please select club status:',['All','In Stock','Sold','Stolen','Return In Stock'],key = 'cstatus')
   csubmit = data.button('Submit')
   if csubmit:
     displaydata = df.copy()
@@ -133,6 +144,12 @@ elif action2 == 'Search for clubs by description':
       displaydata = displaydata[displaydata['Brand'] == cbrand]
     if ctype_ != 'All':
       displaydata = displaydata[displaydata['Club Type'] == ctype_]
+    if chand != 'All':
+      displaydata = displaydata[displaydata['Hand'] == chand]
+    if cflex != 'All':
+      displaydata = displaydata[displaydata['Shaft Flex'] == cflex]
+    if cstatus != 'All':
+      displaydata = displaydata[displaydata['Status'] == cstatus]
     if cnumber != '':
       displaydata = displaydata[displaydata['Number'] == str(cnumber)]
     if displaydata.empty == True:
