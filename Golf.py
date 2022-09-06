@@ -81,10 +81,10 @@ elif action == 'Review Data':
   df1 = pd.DataFrame(clubID)
   df2 = pd.DataFrame(barcodes)
   df = pd.merge(df1,df2)
-  action2 = st.selectbox('Would you like to:',['Review all clubs data','Review data for a particular club type by barcode','Review data for a particular club type by description'],key = 'action2')
+  action2 = st.selectbox('Would you like to:',['Review all clubs data','Search for clubs by barcode','Search for clubs by description','Search by club Serial Code'],key = 'action2')
   if action2 == 'Review all clubs data':
     st.dataframe(df)
-  elif action2 == 'Review data for a particular club type by barcode':
+  elif action2 == 'Search for clubs by barcode:
     barcodedata = st.text_input('Enter Barcode:','',key = 'bc')
     SUBmit = st.button('Submit',key = 'by barcode')
     if SUBmit:
@@ -95,7 +95,7 @@ elif action == 'Review Data':
       elif str(barcodedata) in barcodes['Barcode']:
         displaydata = df[df['Barcode'] == str(barcodedata)]
         st.dataframe(displaydata)
-  elif action2 == 'Review data for a particular club type by description':
+  elif action2 == 'Search for clubs by description':
     with st.form('New Barcode'):
       st.write('Please refine down to your search criteria. Anything left blank will not be filtered.')
       cbrand = st.selectbox('Please select club brand:',['All','Callaway','Titleist','Taylor Made','Top Flight','Ping','Cobra','Adams','Other'],key = 'cBrand')
@@ -112,5 +112,10 @@ elif action == 'Review Data':
         displaydata = displaydata[displaydata['Club Type'] == ctype_]
       if cnumber != '':
         displaydata = displaydata[displaydata['Number'] == str(cnumber)]
+      st.dataframe(displaydata)
+  elif action2 == 'Search by club Serial Code':
+    serialnumber = st.text_input('Enter serial number:','',key = 'serialnumber')
+    if st.button('Submit',key = 'submitrefine'):
+      displaydata = df[df['Serial Code'] == str(serialnumber)]
       st.dataframe(displaydata)
 
