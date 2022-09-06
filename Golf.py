@@ -112,10 +112,16 @@ elif action == 'Review Data':
         displaydata = displaydata[displaydata['Club Type'] == ctype_]
       if cnumber != '':
         displaydata = displaydata[displaydata['Number'] == str(cnumber)]
-      st.dataframe(displaydata)
+      if displaydata.empty == True:
+        st.warning('There are no clubs that fit this criteria')
+      else:
+        st.dataframe(displaydata)
   elif action2 == 'Search by club Serial Code':
     serialnumber = st.text_input('Enter serial number:','',key = 'serialnumber')
     if st.button('Submit',key = 'submitrefine'):
       displaydata = df[df['Serial Code'] == str(serialnumber)]
-      st.dataframe(displaydata)
+      if displaydata.empty == True:
+        st.warning('There are no clubs that fit this criteria')
+      else:
+        st.dataframe(displaydata)
 
