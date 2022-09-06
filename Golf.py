@@ -15,7 +15,7 @@ add,data,reset = st.tabs(['Add, adjust, or check a club by barcode and serial co
 
 def displaydataframe(dataframe:pd.DataFrame):
   with data.container():
-    c1,c2,c3,c4,c5,c6,c7,c8 = data.columns([1,2,2,2,2,2,2,4])
+    c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = data.columns([1,2,2,2,2,2,2,4])
     c1.write('#')
     c2.write('Serial Code')
     c3.write('Barcode')
