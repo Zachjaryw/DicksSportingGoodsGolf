@@ -13,9 +13,7 @@ clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
 barcodes['Number'][0] = '10.5 Degree'
 barcodes['Specifics'][0] = 'Mavrik'
-st.write(barcodes)
-if st.button('submit'):
-  toDBX(dbx,barcodes,st.secrets.filepath.barcode)
+toDBX(dbx,barcodes,st.secrets.filepath.barcode)
 
 add,data,reset,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data','Save Data'])
 
