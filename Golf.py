@@ -180,7 +180,7 @@ elif action2 == 'Delete a club from the system':
   removeclubID = data.text_input('Enter the serial number for the club you would like to delete','',key = 'remove2')
   df = pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes))
   df = df[df['Barcode'] == removeclubbarcode]
-  df = df[df['Serial Number'] = removeclubID]
+  df = df[df['Serial Number'] == removeclubID]
   if not(df.empty) and df.size[0] == 1:
     if data.button('Confirm club removal',key = 'removeclub'):
       remove = pd.DataFrame(clubID)
