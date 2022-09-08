@@ -185,8 +185,11 @@ elif action2 == 'Delete a club from the system':
     removedf = pd.DataFrame(clubID)
     if data.button('Confirm club removal',key = 'removeclub'):
       removedf.drop(df.index[0],inplace = True)
-      clubID = removedf.to_dict()
-      toDBX(dbx,clubID,st.secrets.filepath.clubID)
+      a = list(removedf['Serial Code'].values())
+      b = list(removedf['Barcode'].values())
+      c = list(removedf['Status'].values())
+      club = {'Serial Code':a,'Barcode':b,'Status':c}
+      toDBX(dbx,club,st.secrets.filepath.clubID)
       data.write('Club has been removed from the system')
       st.experimental_rerun()
       
