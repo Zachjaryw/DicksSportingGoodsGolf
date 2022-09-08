@@ -42,6 +42,7 @@ def displaydataframe(dataframe:pd.DataFrame,rows = 1000):
         c8.write(dataframe['Hand'][index])
         c9.write(dataframe['Shaft Flex'][index])
         c10.write(dataframe['Specifics'][index])
+        row +=1
     elif row >= rows:
       break
       
@@ -116,7 +117,7 @@ if reset:
   toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Number':[],'Hand':[],'Shaft Flex':[],'Specifics':[]},st.secrets.filepath.barcode)
   toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
 
-action2 = data.selectbox('Would you like to:',['Review all clubs data','Search for clubs by barcode','Search for clubs by description','Search by club Serial Code'],key = 'action2')
+action2 = data.selectbox('Would you like to:',['Review all clubs data','Search for clubs by barcode','Search for clubs by description','Search by club Serial Code','Delete a club from the system'],key = 'action2')
 if action2 == 'Review all clubs data':
   displaydataframe(pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes)))
 elif action2 == 'Search for clubs by barcode':
@@ -174,7 +175,21 @@ elif action2 == 'Search by club Serial Code':
       data.warning('There are no clubs that fit this criteria')
     else:
       displaydataframe(pd.merge(displaydata,pd.DataFrame(barcodes)))
-
+elif action2 == 'Delete a club from the system':
+  removeclubbarcode = data.text_input('Enter the barcode for the club you would like to delete','',key = 'remove1')
+  removeclubID = data.text_input('Enter the serial number for the club you would like to delete','',key = 'remove2')
+  df = pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes))
+  df = df[df['Barcode'] == removeclubbarcode]
+  df = df[df['Serial Number'] = removeclubID]
+  if not(df.empty) and df.size[0] == 1:
+    if data.button('Confirm club removal',key = 'removeclub'):
+      remove = pd.DataFrame(clubID)
+      remove.drop(df.index[0],inplace = True)
+      clubID = remove.to_dict()
+      toDBX(dbx,clubID,st.secrets.filepath.clubID)
+      data.write('Club has been removed from the system')
+      st.experimental_rerun()
+      
 savedata = save.button('Save full dataset in data storage',key = 'savedata')
 if savedata:
   toDBX(dbx,pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes)).to_dict(),st.secrets.filepath.saveFile)
