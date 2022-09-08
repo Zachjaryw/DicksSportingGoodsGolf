@@ -11,7 +11,7 @@ dbx = initializeToken(st.secrets.dropbox.access)
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
-add,data,reset,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data','Save Data'])
+add,data,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Save Data'])
 
 def displaydataframe(dataframe:pd.DataFrame,rows = 1000):
   data.write(f'There are a total of {dataframe.shape[0]} results. Maximum of {rows} results on this page.')
@@ -112,11 +112,6 @@ else:
     add.write(f'New barcode has been added to the system')
     st.experimental_rerun()
 
-reset = reset.button('Press to confirm data reset.')
-if reset:
-  toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Number':[],'Hand':[],'Shaft Flex':[],'Specifics':[]},st.secrets.filepath.barcode)
-  toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
-
 action2 = data.selectbox('Would you like to:',['Review all clubs data','Search for clubs by barcode','Search for clubs by description','Search by club Serial Code','Delete a club from the system'],key = 'action2')
 if action2 == 'Review all clubs data':
   displaydataframe(pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes)))
@@ -197,3 +192,9 @@ savedata = save.button('Save full dataset in data storage',key = 'savedata')
 if savedata:
   toDBX(dbx,pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes)).to_dict(),st.secrets.filepath.saveFile)
   save.write('File has been saved to local data storage.')
+
+  
+datareset = '''
+toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Number':[],'Hand':[],'Shaft Flex':[],'Specifics':[]},st.secrets.filepath.barcode)
+toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
+'''
