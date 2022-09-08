@@ -10,6 +10,11 @@ dbx = initializeToken(st.secrets.dropbox.access)
 
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
+club = {'Serial Code':[j for i,j in clubID['Serial Code']],'Barcode':[j for i,j in clubID['Barcode']],'Status':[j for i,j in clubID['Status']]}
+st.write(club)
+if st.button('confrifn'):
+  toDBX(dbx,club,st.secrets.filepath.clubID)
+
 
 add,data,reset,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data','Save Data'])
 
@@ -183,9 +188,6 @@ elif action2 == 'Delete a club from the system':
   df = df[df['Serial Code'] == removeclubID]
   if not(df.empty) and df.shape[0] == 1:
     removedf = pd.DataFrame(clubID)
-    data.write(removedf)
-    data.write(df)
-    data.write(removedf.loc[df.index[0]])
     if data.button('Confirm club removal',key = 'removeclub'):
       removedf.drop(df.index[0],inplace = True)
       clubID = removedf.to_dict()
