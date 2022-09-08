@@ -13,7 +13,8 @@ clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
 add,data,reset,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data','Save Data'])
 
-def displaydataframe(dataframe:pd.DataFrame):
+def displaydataframe(dataframe:pd.DataFrame,rows = 1000):
+  data.write(f'There are a total of {dataframe.shape[0]} results. Maximum of {rows} results on this page.')
   with data.container():
     c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = data.columns([1,2,2,2,2,2,2,2,2,2])
     c1.write('#')
@@ -26,19 +27,24 @@ def displaydataframe(dataframe:pd.DataFrame):
     c8.write('Handedness')
     c9.write('Shaft Flex')
     c10.write('Specifics')
+  row = 0
   for index in dataframe.index.tolist():
-    with data.container():
-      c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = data.columns([1,2,2,2,2,2,2,2,2,2])
-      c1.write(str(index))
-      c2.write(dataframe['Serial Code'][index])
-      c3.write(dataframe['Barcode'][index])
-      c4.write(dataframe['Status'][index])
-      c5.write(dataframe['Brand'][index])
-      c6.write(dataframe['Club Type'][index])
-      c7.write(dataframe['Number'][index])
-      c8.write(dataframe['Hand'][index])
-      c9.write(dataframe['Shaft Flex'][index])
-      c10.write(dataframe['Specifics'][index])
+    if row < rows:
+      with data.container():
+        c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = data.columns([1,2,2,2,2,2,2,2,2,2])
+        c1.write(str(index))
+        c2.write(dataframe['Serial Code'][index])
+        c3.write(dataframe['Barcode'][index])
+        c4.write(dataframe['Status'][index])
+        c5.write(dataframe['Brand'][index])
+        c6.write(dataframe['Club Type'][index])
+        c7.write(dataframe['Number'][index])
+        c8.write(dataframe['Hand'][index])
+        c9.write(dataframe['Shaft Flex'][index])
+        c10.write(dataframe['Specifics'][index])
+    elif row >= rows:
+      break
+      
 
 col1,col2 = add.columns(2)
 barcode = col1.text_input('Enter Barcode Number','',key = 'Barcode')
@@ -135,6 +141,9 @@ elif action2 == 'Search for clubs by description':
   chand = data.selectbox('Please select club handedness:',['All','Right Hand','Left Hand'],key = 'handc')
   cflex = data.selectbox('Please select shaft flex:',['All','Regular','Stiff','Extra','Senior','Ladies'],key = 'cflex')
   cstatus = data.selectbox('Please select club status:',['All','In Stock','Sold','Stolen','Return In Stock'],key = 'cstatus')
+  dc1,dc2 = data.columns([7,1])
+  dc1.write('')
+  rows = dc2.selectbox('How many results',[10,25,50,100])
   csubmit = data.button('Submit',key = 'csubmitbutton')
   if csubmit:
     displaydata = pd.DataFrame(barcodes)
@@ -155,7 +164,7 @@ elif action2 == 'Search for clubs by description':
     if displaydata.empty == True:
       data.warning('There are no clubs that fit this criteria')
     else:
-      displaydataframe(displaydata)
+      displaydataframe(displaydata,rows)
 elif action2 == 'Search by club Serial Code':
   serialnumber = data.text_input('Enter serial number:','',key = 'serialnumber')
   if data.button('Submit',key = 'submitrefine'):
