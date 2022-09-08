@@ -12,7 +12,7 @@ dbx = initializeToken(st.secrets.dropbox.access)
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
-clubID['Date Entered'] = [dt.date.today() for day in range(clubID.shape[0])]
+clubID['Date Entered'] = [dt.date.today() for day in range(len(clubID['Barcode']))]
 st.write(clubID)
 
 add,data,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Save Data'])
