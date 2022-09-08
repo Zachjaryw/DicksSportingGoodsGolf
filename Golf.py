@@ -163,7 +163,7 @@ elif action2 == 'Search for clubs by description':
       data.warning('There are no clubs that fit this criteria')
     else:
       if sort == 'Newest to Oldest':
-        displaydata = displaydata.sort_values('Date Entered',ascedning = False)
+        displaydata = displaydata.sort_values('Date Entered',ascending = False)
       elif sort == 'Oldest to Newest':
         displaydata = displaydata.sort_values('Date Entered',ascending = True)
       displaydataframe(displaydata,rows)
