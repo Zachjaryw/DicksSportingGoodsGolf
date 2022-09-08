@@ -181,7 +181,7 @@ elif action2 == 'Delete a club from the system':
   df = pd.merge(pd.DataFrame(clubID),pd.DataFrame(barcodes))
   df = df[df['Barcode'] == removeclubbarcode]
   df = df[df['Serial Code'] == removeclubID]
-  if not(df.empty) and df.size[0] == 1:
+  if not(df.empty) and df.shape[0] == 1:
     if data.button('Confirm club removal',key = 'removeclub'):
       remove = pd.DataFrame(clubID)
       remove.drop(df.index[0],inplace = True)
