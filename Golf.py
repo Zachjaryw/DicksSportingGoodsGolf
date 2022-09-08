@@ -138,9 +138,10 @@ elif action2 == 'Search for clubs by description':
   chand = data.selectbox('Please select club handedness:',['All','Right Hand','Left Hand'],key = 'handc')
   cflex = data.selectbox('Please select shaft flex:',['All','Regular','Stiff','Extra','Senior','Ladies'],key = 'cflex')
   cstatus = data.selectbox('Please select club status:',['All','In Stock','Sold','Stolen','Return In Stock'],key = 'cstatus')
-  dc1,dc2 = data.columns([7,1])
+  dc1,dc2,dc3 = data.columns([4,3,1])
   dc1.write('')
-  rows = dc2.selectbox('How many results',[10,25,50,100])
+  sort = dc2.selectbox('Sort by:',['Newest to Oldest','Oldest to Newest'])
+  rows = dc3.selectbox('How many results',[10,25,50,100])
   csubmit = data.button('Submit',key = 'csubmitbutton')
   if csubmit:
     displaydata = pd.DataFrame(barcodes)
@@ -161,6 +162,10 @@ elif action2 == 'Search for clubs by description':
     if displaydata.empty == True:
       data.warning('There are no clubs that fit this criteria')
     else:
+      if sort == 'Newest to Oldest':
+        displaydata = displaydata.sort_values('Date Entered',ascedning = False)
+      elif sort == 'Oldest to Newest':
+        displaydata = displaydata.sort_values('Date Entered',ascending = True)
       displaydataframe(displaydata,rows)
 elif action2 == 'Search by club Serial Code':
   serialnumber = data.text_input('Enter serial number:','',key = 'serialnumber')
