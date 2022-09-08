@@ -11,10 +11,6 @@ dbx = initializeToken(st.secrets.dropbox.access)
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
 
-barcodes['Number'][0] = '10.5 Degree'
-barcodes['Specifics'][0] = 'Mavrik'
-toDBX(dbx,barcodes,st.secrets.filepath.barcode)
-
 add,data,reset,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Reset Data','Save Data'])
 
 def displaydataframe(dataframe:pd.DataFrame,rows = 1000):
