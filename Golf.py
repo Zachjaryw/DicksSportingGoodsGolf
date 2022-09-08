@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 from Dropbox_Setup import *
+import datetime as dt
 
 st.set_page_config(layout="wide")
 st.title('Golf Club Inventory System')
@@ -10,6 +11,9 @@ dbx = initializeToken(st.secrets.dropbox.access)
 
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
+
+clubID['Date Entered'] = [dt.date.today() for day in range(clubID.shape[0])]
+st.write(clubID)
 
 add,data,save = st.tabs(['Add, adjust, or check a club by barcode and serial code','Review Data','Save Data'])
 
@@ -196,5 +200,5 @@ if savedata:
   
 datareset = '''
 toDBX(dbx,{'Barcode':[],'Brand':[],'Club Type':[],'Number':[],'Hand':[],'Shaft Flex':[],'Specifics':[]},st.secrets.filepath.barcode)
-toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[]},st.secrets.filepath.clubID)
+toDBX(dbx,{'Serial Code':[],'Barcode':[],'Status':[],'Date Entered':[]},st.secrets.filepath.clubID)
 '''
