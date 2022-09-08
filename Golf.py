@@ -182,8 +182,10 @@ elif action2 == 'Delete a club from the system':
   df = df[df['Barcode'] == removeclubbarcode]
   df = df[df['Serial Code'] == removeclubID]
   if not(df.empty) and df.shape[0] == 1:
+    remove = pd.DataFrame(clubID)
+    data.write(remove.loc[df.index[0]])
     if data.button('Confirm club removal',key = 'removeclub'):
-      remove = pd.DataFrame(clubID)
+      
       remove.drop(df.index[0],inplace = True)
       clubID = remove.to_dict()
       toDBX(dbx,clubID,st.secrets.filepath.clubID)
