@@ -184,6 +184,7 @@ elif action2 == 'Delete a club from the system':
   if not(df.empty) and df.shape[0] == 1:
     removedf = pd.DataFrame(clubID)
     data.write(removedf)
+    data.write(df)
     data.write(removedf.iloc[df.index[0]])
     if data.button('Confirm club removal',key = 'removeclub'):
       removedf.drop(df.index[0],inplace = True)
