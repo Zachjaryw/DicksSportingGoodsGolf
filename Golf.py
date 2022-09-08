@@ -10,7 +10,10 @@ dbx = initializeToken(st.secrets.dropbox.access)
 
 barcodes = fromDBX(dbx,st.secrets.filepath.barcode)
 clubID = fromDBX(dbx,st.secrets.filepath.clubID)
-club = {'Serial Code':clubID['Serial Code'].values.tolist(),'Barcode':clubID['Barcode'].values.tolist(),'Status':clubID['Status'].values.tolist()}
+a = clubID['Serial Code'].values.tolist()
+b = clubID['Barcode'].values.tolist()
+c = clubID['Status'].values.tolist()
+club = {'Serial Code':a,'Barcode':b,'Status':c}
 st.write(club)
 if st.button('confrifn'):
   toDBX(dbx,club,st.secrets.filepath.clubID)
